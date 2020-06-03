@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="168" height="163" viewBox="0 0 168 163">
+  <defs>
+    <filter id="Rechteck_14" x="0" y="0" width="168" height="163" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="7.5" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Logo" transform="translate(-80.5 -146.5)">
+    <g transform="matrix(1, 0, 0, 1, 80.5, 146.5)" filter="url(#Rechteck_14)">
+      <rect id="Rechteck_14-2" data-name="Rechteck 14" width="123" height="118" rx="41" transform="translate(22.5 22.5)" fill="#fff"/>
+    </g>
+    <g id="Gruppe_2" data-name="Gruppe 2" transform="translate(91 153)">
+      <g id="Gruppe_1" data-name="Gruppe 1" transform="translate(37.79 38)">
+        <path id="Polygon_1" data-name="Polygon 1" d="M26.082,17.582a10,10,0,0,1,17.837,0L62.633,54.476A10,10,0,0,1,53.715,69H16.285A10,10,0,0,1,7.367,54.476Z" transform="translate(0.21 3)" fill="#e20303" opacity="0.44"/>
+        <path id="Polygon_2" data-name="Polygon 2" d="M26.082,17.582a10,10,0,0,1,17.837,0L62.633,54.476A10,10,0,0,1,53.715,69H16.285A10,10,0,0,1,7.367,54.476Z" transform="translate(70.21 69) rotate(180)" fill="#e20303"/>
+      </g>
+    </g>
+  </g>
+</svg>
