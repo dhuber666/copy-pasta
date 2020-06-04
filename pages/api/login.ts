@@ -2,15 +2,23 @@ import { compare } from "bcrypt";
 import cookie from "cookie";
 import { sign } from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
-import { openDB } from "../../openDB";
 
-export default async function login(req: NextApiRequest, res: NextApiResponse) {
-  const db = await openDB();
+import nextConnect from "next-connect";
+import middleware from "../../middleware/middleware";
 
+const handler = nextConnect();
+
+handler.use(middleware);
+
+interface Props extends NextApiRequest {
+  db: any;
+}
+
+handler.post(async (req: Props, res) => {
   if (req.method === "POST") {
-    const person = await db.get("select * from person where email = ?", [
-      req.body.email,
-    ]);
+    const person = await req.db
+      .collection("users")
+      .findOne({ email: req.body.email });
 
     compare(req.body.password, person.password, function (err, result) {
       if (!err && result) {
@@ -40,4 +48,6 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
   } else {
     res.status(405).json({ message: "We only support POST" });
   }
-}
+});
+
+export default handler;

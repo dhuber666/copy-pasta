@@ -24,9 +24,14 @@ export const authenticated = (fn: NextApiHandler) => async (
 };
 
 handler.get(async (req, res) => {
-  let doc = await req.db.collection("users").findOne();
+  if (req.isAuthenticated) {
+    let doc = await req.db.collection("users").findOne();
+    res.json(doc);
+    return;
+  }
 
-  res.json(doc);
+  res.status(401).json({ message: "Sorry you are not authenticated" });
+  return;
 });
 
 export default handler;

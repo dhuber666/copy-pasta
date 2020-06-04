@@ -1,18 +1,17 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { verify } from "jsonwebtoken";
 
-export const authenticated = (fn: NextApiHandler) => async (
-  req: NextApiRequest,
-  res: NextApiResponse
-) => {
-  verify(req.headers.authorization!, process.env.JSON_SECRET, async function (
+export default async function isAuthenticated(req, res, next) {
+  verify(req.cookies.auth!, process.env.JSON_SECRET, async function (
     err,
     decoded
   ) {
     if (!err && decoded) {
-      return await fn(req, res);
+      console.log("decoded: ", decoded);
+      req.isAuthenticated = true;
+      return next();
     }
 
-    res.status(401).json({ message: "Sorry you are not authenticated" });
+    req.isAuthenticated = false;
+    return next();
   });
-};
+}

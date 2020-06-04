@@ -1,26 +1,31 @@
 import { hash } from "bcrypt";
 import { NextApiRequest, NextApiResponse } from "next";
-import { openDB } from "../../openDB";
+import nextConnect from "next-connect";
+import middleware from "../../middleware/middleware";
 
-export default async function signup(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const db = await openDB();
+const handler = nextConnect();
 
+handler.use(middleware);
+
+handler.post(async (req, res) => {
   if (req.method === "POST") {
     hash(req.body.password, 10, async function (err, hash) {
       // Store hash in your password DB.
 
-      const statement = await db.prepare(
-        "INSERT INTO person (name, email, password) values (?, ?, ?)"
-      );
-      statement.run(req.body.name, req.body.email, hash);
-
-      const person = await db.all("select * from person");
-      res.json(person);
+      try {
+        const person = await req.db.collection("users").insert({
+          email: req.body.email,
+          password: hash,
+        });
+        res.json(person);
+      } catch (error) {
+        console.log("we have error: ", error);
+        res.json(error);
+      }
     });
   } else {
     res.status(405).json({ message: "We only support POST" });
   }
-}
+});
+
+export default handler;
