@@ -18,10 +18,10 @@ export async function getServerSideProps(ctx: NextPageContext) {
     process.env.NODE_ENV === "development"
       ? process.env.SERVER_URI
       : process.env.VERCEL_URL;
-  const json = await myGet(`${url}/api/people`, ctx);
+  const res = await fetch(`${url}/api/people`);
   return {
     props: {
-      people: json,
+      people: await res.json(),
     }, // will be passed to the page component as props
   };
 }

@@ -1,6 +1,11 @@
 import { verify } from "jsonwebtoken";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { openDB } from "../../openDB";
+import nextConnect from "next-connect";
+import middleware from "../../middleware/middleware";
+
+const handler = nextConnect();
+
+handler.use(middleware);
 
 export const authenticated = (fn: NextApiHandler) => async (
   req: NextApiRequest,
@@ -18,12 +23,10 @@ export const authenticated = (fn: NextApiHandler) => async (
   });
 };
 
-export default authenticated(async function getPeople(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const db = await openDB();
-  const people = await db.all("select id, email, name from person");
+handler.get(async (req, res) => {
+  let doc = await req.db.collection("users").findOne();
 
-  res.json(people);
+  res.json(doc);
 });
+
+export default handler;
