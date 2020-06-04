@@ -18,6 +18,8 @@ export async function getServerSideProps(ctx: NextPageContext) {
     process.env.NODE_ENV === "development"
       ? process.env.SERVER_URI
       : process.env.VERCEL_URL;
+
+  console.log("url is: ", url);
   const json = await myGet(`${url}/api/people`, ctx);
   return {
     props: {

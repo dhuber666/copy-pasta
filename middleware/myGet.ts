@@ -10,7 +10,8 @@ export async function myGet(url: string, ctx: NextPageContext) {
       ? process.env.SERVER_URI
       : process.env.VERCEL_URL;
 
-  console.log(envUrl);
+  console.log("url from myget", url);
+  console.log("url from envUrl in myget", envUrl);
 
   const resp = await fetch(url, {
     headers: {
