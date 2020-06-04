@@ -7,13 +7,17 @@ const handler = nextConnect();
 
 handler.use(middleware);
 
-handler.post(async (req, res) => {
+interface Props extends NextApiRequest {
+  db: any;
+}
+
+handler.post(async (req: Props, res) => {
   if (req.method === "POST") {
     hash(req.body.password, 10, async function (err, hash) {
       // Store hash in your password DB.
 
       try {
-        const person = await req.db.collection("users").insert({
+        const person = await req.db.collection("users").insertOne({
           email: req.body.email,
           password: hash,
         });

@@ -7,6 +7,11 @@ const handler = nextConnect();
 
 handler.use(middleware);
 
+interface Props extends NextApiRequest {
+  isAuthenticated: boolean;
+  db: any;
+}
+
 export const authenticated = (fn: NextApiHandler) => async (
   req: NextApiRequest,
   res: NextApiResponse
@@ -23,7 +28,7 @@ export const authenticated = (fn: NextApiHandler) => async (
   });
 };
 
-handler.get(async (req, res) => {
+handler.get(async (req: Props, res) => {
   if (req.isAuthenticated) {
     let doc = await req.db.collection("users").findOne();
     res.json(doc);
