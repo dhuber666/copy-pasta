@@ -10,6 +10,8 @@ export async function myGet(url: string, ctx: NextPageContext) {
       ? process.env.SERVER_URI
       : process.env.VERCEL_URL;
 
+  console.log(envUrl);
+
   const resp = await fetch(url, {
     headers: {
       cookie: cookie!,
