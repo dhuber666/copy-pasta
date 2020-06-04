@@ -20,13 +20,14 @@ export async function myGet(url: string, ctx: NextPageContext) {
   });
 
   if (resp.status === 401 && !ctx.req) {
+    console.log("hello from myget no context");
     Router.replace("/login");
     return {};
   }
 
   if (resp.status === 401 && ctx.req) {
     ctx.res?.writeHead(302, {
-      Location: `${envUrl}/login`,
+      Location: `https://${envUrl}/login`,
     });
     ctx.res?.end();
     return;
