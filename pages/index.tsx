@@ -14,7 +14,11 @@ export default function IndexPage({ people }: any) {
 }
 
 export async function getServerSideProps(ctx: NextPageContext) {
-  const json = await myGet(`${process.env.SERVER_URI}/api/people`, ctx);
+  const url =
+    process.env.NODE_ENV === "development"
+      ? process.env.SERVER_URI
+      : process.env.VERCEL_URL;
+  const json = await myGet(`${url}/api/people`, ctx);
   return {
     props: {
       people: json,
