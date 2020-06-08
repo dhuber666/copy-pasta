@@ -24,7 +24,6 @@ const Login = () => {
       return router.push("/");
     }
     const json = await resp.json();
-    console.log(await resp);
   };
 
   return (

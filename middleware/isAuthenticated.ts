@@ -6,7 +6,6 @@ export default async function isAuthenticated(req, res, next) {
     decoded
   ) {
     if (!err && decoded) {
-      console.log("decoded: ", decoded);
       req.isAuthenticated = true;
       return next();
     }

@@ -1,38 +1,41 @@
-import fetch from "isomorphic-unfetch";
 import { NextPageContext } from "next";
 import Router from "next/router";
+import axios from "axios";
 
 export async function myGet(url: string, ctx: NextPageContext) {
   const cookie = ctx.req?.headers.cookie;
 
-  const envUrl =
-    process.env.NODE_ENV === "development"
-      ? process.env.SERVER_URI
-      : process.env.VERCEL_URL;
+  console.log("hihihihiih");
 
-  console.log("url from myget", url);
-  console.log("url from envUrl in myget", envUrl);
-
-  const resp = await fetch(url, {
-    headers: {
-      cookie: cookie!,
-    },
-  });
-
-  if (resp.status === 401 && !ctx.req) {
-    console.log("hello from myget no context");
-    Router.replace("/login");
-    return {};
-  }
-
-  if (resp.status === 401 && ctx.req) {
-    ctx.res?.writeHead(302, {
-      Location: `https://${envUrl}/login`,
+  try {
+    const resp = await axios.get("http://localhost:3000/api/people", {
+      withCredentials: true,
+      headers: {
+        cookie: cookie!,
+      },
     });
-    ctx.res?.end();
-    return;
+
+    return resp;
+  } catch (error) {
+    if (error.response.status === 401 && !ctx.req) {
+      console.log("hello from myget no context");
+      Router.replace("/login");
+      return {};
+    }
+
+    if (error.response.status === 401 && ctx.req) {
+      console.log("hi from asdfasdfasdf");
+      ctx.res?.writeHead(302, {
+        Location: "/login",
+      });
+      ctx.res?.end();
+      return;
+    }
   }
 
-  const json = await resp.json();
-  return json;
+  // handle error
+
+  //
+
+  // return resp || { msg: "hiho" };
 }
