@@ -2,6 +2,15 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import { MongoClient } from "mongodb";
 
+import Cors from "cors";
+import initMiddleware from "../../../middleware/init-middleware";
+
+// Initialize the cors middleware
+const cors = initMiddleware(
+  // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
+  Cors()
+);
+
 const options = {
   site: process.env.SITE,
   providers: [
@@ -51,4 +60,7 @@ const options = {
   },
 };
 
-export default (req, res) => NextAuth(req, res, options);
+export default async (req, res) => {
+  await cors(req, res);
+  return NextAuth(req, res, options);
+};
