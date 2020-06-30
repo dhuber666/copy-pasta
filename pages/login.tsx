@@ -1,30 +1,17 @@
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter, Router } from "next/router";
+import { signin, getSession } from "next-auth/client";
 
-const Login = () => {
+const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const resp = await fetch("http://localhost:3000/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    });
 
-    if ((await resp.status) === 200) {
-      return router.push("/");
-    }
-    const json = await resp.json();
-    console.log(await resp);
+    signin("email", { email });
   };
 
   return (
@@ -116,5 +103,26 @@ const Login = () => {
 };
 
 // <img src="/icons/Logo.svg" alt="my image" />
+
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx);
+
+  console.log("hello sessos");
+  console.log(typeof window);
+
+  if (typeof window === "undefined") {
+    if (session) {
+      console.log("i have sesssos");
+      ctx.res.writeHead(302, { Location: "/" });
+      ctx.res.end();
+    }
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+}
 
 export default Login;
