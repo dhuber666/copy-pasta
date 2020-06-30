@@ -1,27 +1,36 @@
-import Nav from "../components/nav";
-import { myGet } from "../middleware/myGet";
-import { NextPageContext } from "next";
+import { getSession } from "next-auth/client";
+import { useEffect } from "react";
+import Router from "next/router";
+import Link from "next/link";
+import Login from "./login";
 
-export default function IndexPage({ people }: any) {
-  return (
-    <div>
-      <Nav />
-      <div className="hero">
-        <h1 className="title">Next.js + Tailwind CSS</h1>
+export default function IndexPage(props) {
+  useEffect(() => {
+    if (props.session) return;
+
+    Router.replace("/", "/login", { shallow: true });
+  }, [props.session]);
+
+  if (props.session) {
+    return (
+      <div>
+        <h2>Logged In</h2>
+        <Link href="/">
+          <a>Home</a>
+        </Link>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return <Login />;
 }
 
-export async function getServerSideProps(ctx: NextPageContext) {
-  const url =
-    process.env.NODE_ENV === "development"
-      ? process.env.SERVER_URI
-      : process.env.VERCEL_URL;
-  const json = await myGet(`${url}/api/people`, ctx);
+export async function getServerSideProps(ctx) {
+  const session = await getSession(ctx);
+
   return {
     props: {
-      people: json,
-    }, // will be passed to the page component as props
+      session,
+    },
   };
 }

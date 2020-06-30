@@ -36,12 +36,13 @@ const Login = () => {
         }}
       >
         <div
-          className="hidden w-full h-full sm:flex flex-col items-start py-64 px-20 z-10 relative"
-          style={{
-            background:
-              "url('images/top-view-of-desert-2265082.png') center no-repeat",
-            backgroundSize: "cover",
-          }}
+          className="hidden w-full h-full sm:flex flex-col items-start py-64 px-20 z-10 relative gradient"
+
+          // style={{
+          //   background:
+          //     "url('images/top-view-of-desert-2265082.png') center no-repeat",
+          //   backgroundSize: "cover",
+          // }}
         >
           <img
             src="icons/Logo.svg"
@@ -59,7 +60,7 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="sm:w-1/3 w-full  h-full bg-mygrey py-56 px-20">
+      <div className="sm:w-1/3 w-full  h-full bg-mygrey py-56 px-12">
         <h2 className="text-brandRed font-sans font-bold text-3xl hover:underline">
           Login.
         </h2>
