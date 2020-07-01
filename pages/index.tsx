@@ -3,6 +3,9 @@ import { useEffect } from "react";
 import Router from "next/router";
 import Link from "next/link";
 import Login from "./login";
+import Nav from "../components/nav";
+import SnippetsPanel from "../components/snippetsPanel";
+import SnippetsDetail from "../components/snippetsDetail";
 
 export default function IndexPage(props) {
   useEffect(() => {
@@ -14,10 +17,11 @@ export default function IndexPage(props) {
   if (props.session) {
     return (
       <div>
-        <h2>Logged In</h2>
-        <Link href="/">
-          <a>Home</a>
-        </Link>
+        <Nav />
+        <div className="flex w-full h-full">
+          <SnippetsPanel />
+          <SnippetsDetail />
+        </div>
       </div>
     );
   }

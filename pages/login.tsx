@@ -2,6 +2,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter, Router } from "next/router";
 import { signin, getSession } from "next-auth/client";
+import { FaGoogle } from "react-icons/fa";
+import { sign } from "jsonwebtoken";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -16,21 +18,8 @@ const Login = (props) => {
 
   return (
     <div className="h-full w-full flex">
-      <div
-        className="sm:w-2/3 sm:block hidden w-full h-full bg-black z-20 relative"
-        style={{
-          opacity: 1,
-        }}
-      >
-        <div
-          className="hidden w-full h-full sm:flex flex-col items-start py-64 px-20 z-10 relative gradient"
-
-          // style={{
-          //   background:
-          //     "url('images/top-view-of-desert-2265082.png') center no-repeat",
-          //   backgroundSize: "cover",
-          // }}
-        >
+      <div className="sm:w-2/3 sm:block hidden z-20 relative">
+        <div className="w-full h-full flex flex-col items-center px-20 justify-center z-10 relative gradient">
           <img
             src="icons/Logo.svg"
             alt="copy-pasta logo"
@@ -47,7 +36,11 @@ const Login = (props) => {
         </div>
       </div>
 
-      <div className="sm:w-1/3 w-full  h-full bg-mygrey py-56 px-12">
+      <div
+        className="sm:w-1/3 w-full h-full bg-mygrey px-8 flex flex-col 
+        justify-center items-center
+      "
+      >
         <h2 className="text-brandRed font-sans font-bold text-3xl hover:underline">
           Login.
         </h2>
@@ -61,7 +54,7 @@ const Login = (props) => {
           here.
         </p>
 
-        <form className="mt-48" onSubmit={handleSubmit}>
+        <form className="mt-12" onSubmit={handleSubmit}>
           <div className="flex items-center bg-white rounded-lg px-3">
             <img src="images/mail.png" alt="mail icon" />
             <input
@@ -70,31 +63,35 @@ const Login = (props) => {
               className="p-3 px-10 rounded-lg block w-full outline-none"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              disabled
             />
           </div>
 
-          <div className="flex items-center bg-white rounded-lg px-3 mt-5">
-            <img src="images/key.png" alt="" />
-            <input
-              type="password"
-              placeholder="Password"
-              className="p-3 px-10 rounded-lg block w-full outline-none "
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <Link href="/pwreset">
+          {/* <Link href="/pwreset">
             <a className="mt-10 block text-center font-serif text-brandGrey text-opacity-50 hover:underline">
               Forgot password
             </a>
-          </Link>
+          </Link> */}
 
           <button
             className="mt-10 w-full bg-brandRed text-white py-4 rounded-lg hover:shadow-xl"
             type="submit"
+            disabled
           >
-            Login
+            Currently disabled
+          </button>
+          <div className="flex w-full items-center justify-center">
+            <div className="h-px bg-gray-700 w-1/3" />
+            <p className="inline-block mx-2 my-4">Or</p>
+            <div className="h-px bg-gray-700 w-1/3" />
+          </div>
+          <button
+            className="text-center rounded-lg border-brandRed border-2 w-full h-12 hover:shadow-xl"
+            onClick={() => signin("google")}
+            type="button"
+          >
+            Login with <FaGoogle className="inline-block" />
+            oogle
           </button>
         </form>
       </div>
