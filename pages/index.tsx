@@ -16,9 +16,9 @@ export default function IndexPage(props) {
 
   if (props.session) {
     return (
-      <div>
+      <div className="h-full w-full">
         <Nav />
-        <div className="flex w-full h-full">
+        <div className="flex w-full h-full bg-bggrey p-4">
           <SnippetsPanel />
           <SnippetsDetail />
         </div>

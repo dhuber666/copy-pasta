@@ -12,6 +12,7 @@ module.exports = {
         brandRed: "#E20303",
         brandBlack: "#000000",
         brandGrey: "#4D4D4D",
+        bggrey: "#F3F3F3",
       },
       fontFamily: {
         sans: "Montserrat, sans-serif",

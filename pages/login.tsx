@@ -63,7 +63,6 @@ const Login = (props) => {
               className="p-3 px-10 rounded-lg block w-full outline-none"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              disabled
             />
           </div>
 
@@ -76,9 +75,8 @@ const Login = (props) => {
           <button
             className="mt-10 w-full bg-brandRed text-white py-4 rounded-lg hover:shadow-xl"
             type="submit"
-            disabled
           >
-            Currently disabled
+            Send Login Mail
           </button>
           <div className="flex w-full items-center justify-center">
             <div className="h-px bg-gray-700 w-1/3" />

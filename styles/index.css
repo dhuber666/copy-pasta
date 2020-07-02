@@ -1,11 +1,18 @@
 @tailwind base;
 @tailwind components;
 
-body,
+* {
+  box-sizing: border-box;
+}
+
 html,
-#__next {
+body {
   height: 100%;
   width: 100%;
+}
+
+#__next {
+  height: calc(100% - 5rem);
 }
 
 .gradient {
