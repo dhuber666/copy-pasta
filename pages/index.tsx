@@ -1,11 +1,55 @@
 import { getSession } from "next-auth/client";
-import { useEffect } from "react";
+import { useEffect, useContext, createContext } from "react";
 import Router from "next/router";
 import Link from "next/link";
 import Login from "./login";
 import Nav from "../components/nav";
 import SnippetsPanel from "../components/snippetsPanel";
 import SnippetsDetail from "../components/snippetsDetail";
+
+const state = {
+  snippets: [
+    "Touch Mahal",
+    "Remedy Resource",
+    "Geiler scheiß",
+    "Touch Mahal",
+    "Remedy Resource",
+    "Geiler scheiß",
+    "Touch Mahal",
+    "Remedy Resource",
+    "Geiler scheiß",
+    "Touch Mahal",
+    "Remedy Resource",
+    "Geiler scheiß",
+    "Touch Mahal",
+    "Remedy Resource",
+    "Geiler scheiß",
+    "Touch Mahal",
+    "Remedy Resource",
+    "Geiler scheiß",
+    "Touch Mahal",
+    "Remedy Resource",
+    "Geiler scheiß",
+    "Touch Mahal",
+    "Remedy Resource",
+    "Geiler scheiß",
+    "Touch Mahal",
+    "Remedy Resource",
+    "Geiler scheiß",
+    "Touch Mahal",
+    "Remedy Resource",
+    "Geiler scheiß",
+    "Touch Mahal",
+    "Remedy Resource",
+    "Geiler scheiß",
+    "Touch Mahal",
+    "Remedy Resource",
+    "Geiler scheiß",
+  ],
+  modalOpen: false,
+};
+
+const StateContext = createContext(state);
 
 export default function IndexPage(props) {
   useEffect(() => {
@@ -16,13 +60,15 @@ export default function IndexPage(props) {
 
   if (props.session) {
     return (
-      <div className="h-full w-full">
-        <Nav />
-        <div className="flex w-full h-full bg-bggrey p-4">
-          <SnippetsPanel />
-          <SnippetsDetail />
+      <StateContext.Provider value={state}>
+        <div className="h-full w-full">
+          <Nav />
+          <div className="flex w-full h-full bg-bggrey p-4">
+            <SnippetsPanel />
+            <SnippetsDetail />
+          </div>
         </div>
-      </div>
+      </StateContext.Provider>
     );
   }
 

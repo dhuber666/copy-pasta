@@ -4,6 +4,7 @@ import { signout, useSession } from "next-auth/client";
 const Nav = () => {
   const [session, isLoading] = useSession();
   if (session) console.log(session);
+  if (session) console.log("the user url", session.user.image);
   return (
     <nav className="flex justify-between px-8 items-center bg-white h-20 sticky">
       <div className="flex items-center h-full">
