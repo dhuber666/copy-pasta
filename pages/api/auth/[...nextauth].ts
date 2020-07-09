@@ -1,7 +1,5 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
-import { MongoClient } from "mongodb";
-import { connectToDatabase } from "../../../db";
 
 import Cors from "cors";
 import initMiddleware from "../../../middleware/init-middleware";
