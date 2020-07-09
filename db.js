@@ -1,31 +1,20 @@
-// Import Dependencies
+import { MongoClient } from "mongodb";
+import nextConnect from "next-connect";
 
-const MongoClient = require("mongodb").MongoClient;
+const client = new MongoClient(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-// Create cached connection variable
-let cachedDb = null;
-
-// A function for connecting to MongoDB,
-// taking a single parameter of the connection string
-export async function connectToDatabase() {
-  // If the database connection is cached,
-  // use it instead of creating a new connection
-  if (cachedDb) {
-    return cachedDb;
-  }
-
-  // If no connection is cached, create a new one
-  const client = await MongoClient.connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-
-  // Select the database through the connection,
-  // using the database path of the connection string
-  const db = await client.db("copy-pasta");
-
-  // Cache the database connection and return the connection
-  cachedDb = db;
-
-  return db;
+async function database(req, res, next) {
+  if (!client.isConnected()) await client.connect();
+  req.dbClient = client;
+  req.db = client.db("copy-pasta");
+  return next();
 }
+
+const middleware = nextConnect();
+
+middleware.use(database);
+
+export default middleware;
