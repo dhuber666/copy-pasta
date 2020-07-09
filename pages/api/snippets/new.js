@@ -1,11 +1,15 @@
 import nextConnect from "next-connect";
 import middleware from "../../../db";
+import protectedRoute from "../../../middleware/protectedPage";
 
 const handler = nextConnect();
 
 handler.use(middleware);
+handler.use(protectedRoute);
 
-handler.get(async (req, res) => {
+handler.post(async (req, res) => {
+  const session = req.session;
+  console.log("the session is: ", session);
   console.log("handler called");
   const collection = await req.db.collection("snippets");
   const snippet = {
