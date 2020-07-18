@@ -12,6 +12,10 @@ body {
 }
 
 #__next {
+  height: 100%;
+}
+
+.custom-height {
   height: calc(100% - 5rem);
 }
 

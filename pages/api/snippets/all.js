@@ -13,6 +13,8 @@ handler.get(async (req, res) => {
   const collection = await req.db.collection("users");
 
   const user = await collection.findOne({ email: req.email });
+
+  console.log("here is the user from sipppets/all", user);
   if (!user) {
     res.status(404).json({ msg: "User cannot be found" });
     return;

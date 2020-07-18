@@ -11,9 +11,12 @@ const SnippetsPanel = ({ snippets = [] }: Props) => {
         <input type="text" placeholder="Search here" className="outline-none" />
         <FaSearch color="grey" className="hover:opacity-75 cursor-pointer" />
       </div>
-      {snippets.map((e) => (
-        <div className="mb-2 bg-white rounded-lg h-16 w-full flex items-center justify-between p-6">
-          <p>{e}</p>
+      {snippets?.map((e) => (
+        <div
+          className="mb-2 bg-white rounded-lg h-16 w-full flex items-center justify-between p-6"
+          key={e.id}
+        >
+          <p>{e.text + e.body}</p>
           <FaEdit color="grey" className="hover:opacity-75 cursor-pointer" />
         </div>
       ))}
