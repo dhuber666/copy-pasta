@@ -64,7 +64,7 @@ export default function IndexPage(props) {
       false
     );
 
-    await axios.post("/api/snippets/new", {
+    axios.post("/api/snippets/new", {
       title,
       body,
     });
