@@ -58,13 +58,15 @@ export default function IndexPage(props) {
       body,
     };
 
-    await mutate(
+    mutate(
       "/api/snippets/all",
       (data) => ({ ...data, snippets: [...data.snippets, tempSnippet] }),
       false
     );
 
-    axios.post("/api/snippets/new", {
+    toggleModal();
+
+    await axios.post("/api/snippets/new", {
       title,
       body,
     });
@@ -73,7 +75,6 @@ export default function IndexPage(props) {
 
     setTitle("");
     setBody("");
-    toggleModal();
   };
 
   useEffect(() => {
