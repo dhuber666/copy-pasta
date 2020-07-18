@@ -11,10 +11,11 @@ handler.use(protectedRoute);
 handler.post(async (req, res) => {
   const collection = await req.db.collection("users");
 
+  console.log("this is the request body: ", req.body);
   const snippet = {
     id: new ObjectID(),
-    text: "test",
-    body: "copy me",
+    title: req.body.title,
+    body: req.body.body,
   };
 
   await collection.updateOne(

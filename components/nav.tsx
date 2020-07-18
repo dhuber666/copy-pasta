@@ -1,7 +1,12 @@
 import Link from "next/link";
 import { signout, useSession } from "next-auth/client";
+import { FaPlusCircle } from "react-icons/fa";
 
-const Nav = () => {
+interface Props {
+  toggleModal: Function;
+}
+
+const Nav = (props: Props) => {
   const [session, isLoading] = useSession();
 
   return (
@@ -10,6 +15,11 @@ const Nav = () => {
         <img src="icons/Logo.svg" alt="copy-pasta logo" className="h-20" />
         <h3 className="ml-8">CopyPaste</h3>
       </div>
+      <FaPlusCircle
+        size="28"
+        className="cursor-pointer text-brandRed"
+        onClick={() => props.toggleModal()}
+      />
       <div className="flex items-center justify-between">
         <Link href="/profile">
           <a className="mr-4">

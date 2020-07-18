@@ -16,7 +16,7 @@ const SnippetsPanel = ({ snippets = [] }: Props) => {
           className="mb-2 bg-white rounded-lg h-16 w-full flex items-center justify-between p-6"
           key={e.id}
         >
-          <p>{e.text + e.body}</p>
+          <p>{e.title + e.body}</p>
           <FaEdit color="grey" className="hover:opacity-75 cursor-pointer" />
         </div>
       ))}
