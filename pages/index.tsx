@@ -1,57 +1,25 @@
 import { getSession } from "next-auth/client";
-import { useEffect, useContext, createContext } from "react";
+import { useEffect } from "react";
 import Router from "next/router";
-import Link from "next/link";
 import Login from "./login";
 import Nav from "../components/nav";
 import SnippetsPanel from "../components/snippetsPanel";
 import SnippetsDetail from "../components/snippetsDetail";
+import useSWR from "swr";
 
-const state = {
-  snippets: [
-    "Touch Mahal",
-    "Remedy Resource",
-    "Geiler scheiß",
-    "Touch Mahal",
-    "Remedy Resource",
-    "Geiler scheiß",
-    "Touch Mahal",
-    "Remedy Resource",
-    "Geiler scheiß",
-    "Touch Mahal",
-    "Remedy Resource",
-    "Geiler scheiß",
-    "Touch Mahal",
-    "Remedy Resource",
-    "Geiler scheiß",
-    "Touch Mahal",
-    "Remedy Resource",
-    "Geiler scheiß",
-    "Touch Mahal",
-    "Remedy Resource",
-    "Geiler scheiß",
-    "Touch Mahal",
-    "Remedy Resource",
-    "Geiler scheiß",
-    "Touch Mahal",
-    "Remedy Resource",
-    "Geiler scheiß",
-    "Touch Mahal",
-    "Remedy Resource",
-    "Geiler scheiß",
-    "Touch Mahal",
-    "Remedy Resource",
-    "Geiler scheiß",
-    "Touch Mahal",
-    "Remedy Resource",
-    "Geiler scheiß",
-  ],
-  modalOpen: false,
-};
-
-const StateContext = createContext(state);
+const snippetsUrl = `${process.env.SITE}/api/snippets/all`;
 
 export default function IndexPage(props) {
+  const fetcher = (url) =>
+    fetch(url, {
+      method: "GET",
+      credentials: "same-origin",
+    }).then((r) => r.json());
+
+  const { data, error } = useSWR(snippetsUrl, fetcher);
+
+  console.log("data is: ", data);
+
   useEffect(() => {
     if (props.session) return;
 
@@ -60,15 +28,13 @@ export default function IndexPage(props) {
 
   if (props.session) {
     return (
-      <StateContext.Provider value={state}>
-        <div className="h-full w-full">
-          <Nav />
-          <div className="flex w-full h-full bg-bggrey p-4">
-            <SnippetsPanel />
-            <SnippetsDetail />
-          </div>
+      <div className="h-full w-full">
+        <Nav />
+        <div className="flex w-full h-full bg-bggrey p-4">
+          <SnippetsPanel />
+          <SnippetsDetail />
         </div>
-      </StateContext.Provider>
+      </div>
     );
   }
 
@@ -76,7 +42,14 @@ export default function IndexPage(props) {
 }
 
 export async function getServerSideProps(ctx) {
+  const fetcher = (url) =>
+    fetch(url, {
+      method: "GET",
+      credentials: "same-origin",
+    }).then((r) => r.json());
+
   const session = await getSession(ctx);
+  // const data = fetcher(snippetsUrl);
 
   return {
     props: {
