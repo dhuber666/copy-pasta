@@ -7,7 +7,7 @@ async function protectedPage(req, res, next) {
   req.userId = null;
   req.email = null;
   const token = await jwt.getJwt({ req, secret });
-  console.log("the token is this one:", token);
+
   if (token) {
     req.userId = token.user.id;
     req.email = token.user.email;

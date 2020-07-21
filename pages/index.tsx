@@ -77,6 +77,44 @@ export default function IndexPage(props) {
     setBody("");
   };
 
+  const onSnippetDelete = async (id: Number) => {
+    const newSnippets = data.snippets.filter((snippet) => snippet.id !== id);
+    mutate(
+      "/api/snippets/all",
+      (data) => ({ ...data, snippets: newSnippets }),
+      false
+    );
+    await axios.delete("/api/snippets/remove", {
+      data: {
+        snippetId: id,
+      },
+    });
+
+    trigger("/api/snippets/all");
+  };
+
+  const onSnippetEdit = async (snippet) => {
+    const newSnippets = data.snippets.map((currentSnippet) => {
+      if (currentSnippet.id === snippet.id) {
+        return snippet;
+      } else {
+        return currentSnippet;
+      }
+    });
+
+    mutate(
+      "/api/snippets/all",
+      (data) => ({ ...data, snippets: newSnippets }),
+      false
+    );
+
+    await axios.put("/api/snippets/update", {
+      snippet,
+    });
+
+    trigger("/api/snippets/all");
+  };
+
   useEffect(() => {
     if (props.session) return;
 
@@ -138,7 +176,11 @@ export default function IndexPage(props) {
           </div>
         </Modal>
         <div className="flex w-full bg-bggrey p-4 custom-height">
-          <SnippetsPanel snippets={data && data.snippets} />
+          <SnippetsPanel
+            snippets={data && data.snippets}
+            removeSnippet={onSnippetDelete}
+            editSnippet={onSnippetEdit}
+          />
           <SnippetsDetail />
         </div>
       </div>
