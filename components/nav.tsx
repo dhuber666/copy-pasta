@@ -15,11 +15,13 @@ const Nav = (props: Props) => {
         <img src="icons/Logo.svg" alt="copy-pasta logo" className="h-20" />
         <h3 className="ml-8">CopyPaste</h3>
       </div>
-      <FaPlusCircle
-        size="28"
-        className="cursor-pointer text-brandRed"
+      <div
+        className="flex items-center cursor-pointer text-brandRed"
         onClick={() => props.toggleModal()}
-      />
+      >
+        <FaPlusCircle size="28" />
+        <p className="ml-4 font-bold">Add new Snippet</p>
+      </div>
       <div className="flex items-center justify-between">
         <Link href="/profile">
           <a className="mr-4">

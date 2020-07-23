@@ -8,6 +8,7 @@ import SnippetsDetail from "../components/snippetsDetail";
 import useSWR, { trigger, mutate } from "swr";
 import axios from "axios";
 import Modal from "react-modal";
+import FilterResults from "react-filter-search";
 
 const snippetsUrl = `/api/snippets/all`;
 
@@ -39,12 +40,12 @@ export default function IndexPage(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [activeSnippet, setActiveSnippet] = useState(null);
+  const [searchText, setSearchText] = useState("");
 
   const initialData = props.data;
 
   const { data } = useSWR(snippetsUrl, fetcher, { initialData });
-
-  console.log("data: ", data);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -176,12 +177,23 @@ export default function IndexPage(props) {
           </div>
         </Modal>
         <div className="flex w-full bg-bggrey p-4 custom-height">
-          <SnippetsPanel
-            snippets={data && data.snippets}
-            removeSnippet={onSnippetDelete}
-            editSnippet={onSnippetEdit}
+          <FilterResults
+            value={searchText}
+            data={data?.snippets}
+            renderResults={(results) => (
+              <SnippetsPanel
+                snippets={results}
+                removeSnippet={onSnippetDelete}
+                editSnippet={onSnippetEdit}
+                setActiveSnippet={setActiveSnippet}
+                activeSnippet={activeSnippet}
+                searchText={searchText}
+                setSearchText={setSearchText}
+              />
+            )}
           />
-          <SnippetsDetail />
+
+          <SnippetsDetail activeSnippet={activeSnippet} />
         </div>
       </div>
     );

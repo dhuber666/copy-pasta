@@ -1,19 +1,31 @@
-import { useState, SyntheticEvent } from "react";
+import { useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 
-interface Props {
-  snippet: {
-    id: string;
-    title: string;
-    body: string;
-  };
-  editSnippet: Function;
-  removeSnippet: Function;
+interface Snippet {
+  id: string;
+  title: string;
+  body: string;
 }
 
-const SnippetPanelItem = ({ snippet, removeSnippet, editSnippet }: Props) => {
+interface Props {
+  snippet: Snippet;
+  editSnippet: Function;
+  removeSnippet: Function;
+  setActiveSnippet: Function;
+  activeSnippet: Snippet;
+}
+
+const SnippetPanelItem = ({
+  snippet,
+  removeSnippet,
+  editSnippet,
+  setActiveSnippet,
+  activeSnippet,
+}: Props) => {
   const [isEditing, setEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(snippet.title);
+
+  const isActiveSnippet = activeSnippet?.id === snippet?.id;
 
   const checkEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.keyCode === 13) {
@@ -45,8 +57,11 @@ const SnippetPanelItem = ({ snippet, removeSnippet, editSnippet }: Props) => {
 
   return (
     <div
-      className="mb-2 bg-white rounded-lg h-16 w-full flex items-center justify-between p-6"
+      className={`mb-2 hover:shadow-lg bg-white rounded-lg h-16 w-full flex items-center justify-between p-6 cursor-pointer ${
+        isActiveSnippet ? "bg-brandRed" : ""
+      }`}
       key={snippet.id}
+      onClick={() => setActiveSnippet(snippet)}
     >
       {isEditing ? (
         <input
@@ -58,19 +73,23 @@ const SnippetPanelItem = ({ snippet, removeSnippet, editSnippet }: Props) => {
           onBlur={onBlur}
         />
       ) : (
-        <p>{editedTitle}</p>
+        <p className={`${isActiveSnippet ? "text-white" : "text-brandGrey"}`}>
+          {editedTitle}
+        </p>
       )}
 
       <div className="flex items-center">
         <FaEdit
           onClick={() => setEditing(true)}
-          color="grey"
+          color={isActiveSnippet ? "white" : "grey"}
           className="hover:opacity-75 cursor-pointer mr-6"
           size={22}
         />
         <FaTrash
           onClick={() => removeSnippet(snippet.id)}
-          className="text-brandRed hover:opacity-75 cursor-pointer"
+          className={`${
+            isActiveSnippet ? "text-white" : "text-brandRed"
+          } hover:opacity-75 cursor-pointer`}
         />
       </div>
     </div>
