@@ -17,7 +17,12 @@ handler.put(async (req, res) => {
 
   await collection.updateOne(
     { email: req.email, "snippets.id": ObjectId(snippet.id) },
-    { $set: { "snippets.$.title": snippet.title } }
+    {
+      $set: {
+        "snippets.$.title": snippet.title,
+        "snippets.$.body": snippet.body,
+      },
+    }
   );
 
   res.status(200).json({ message: "Snippet updated" });

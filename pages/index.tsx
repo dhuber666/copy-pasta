@@ -40,12 +40,14 @@ export default function IndexPage(props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [activeSnippet, setActiveSnippet] = useState(null);
+
   const [searchText, setSearchText] = useState("");
 
   const initialData = props.data;
 
   const { data } = useSWR(snippetsUrl, fetcher, { initialData });
+
+  const [activeSnippet, setActiveSnippet] = useState(data?.snippets[0]);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -193,7 +195,11 @@ export default function IndexPage(props) {
             )}
           />
 
-          <SnippetsDetail activeSnippet={activeSnippet} />
+          <SnippetsDetail
+            activeSnippet={activeSnippet}
+            removeSnippet={onSnippetDelete}
+            editSnippet={onSnippetEdit}
+          />
         </div>
       </div>
     );
