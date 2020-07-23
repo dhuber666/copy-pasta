@@ -47,7 +47,9 @@ export default function IndexPage(props) {
 
   const { data } = useSWR(snippetsUrl, fetcher, { initialData });
 
-  const [activeSnippet, setActiveSnippet] = useState(data?.snippets[0]);
+  const [activeSnippet, setActiveSnippet] = useState(
+    data ? data.snippets[0] : null
+  );
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
