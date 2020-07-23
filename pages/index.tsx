@@ -5,7 +5,7 @@ import Login from "./login";
 import Nav from "../components/nav";
 import SnippetsPanel from "../components/snippetsPanel";
 import SnippetsDetail from "../components/snippetsDetail";
-import useSWR, { trigger, mutate } from "swr";
+import useSWR, { trigger, mutate, cache } from "swr";
 import axios from "axios";
 import Modal from "react-modal";
 import FilterResults from "react-filter-search";
@@ -86,9 +86,12 @@ export default function IndexPage(props) {
     const newSnippets = data.snippets.filter((snippet) => snippet.id !== id);
     mutate(
       "/api/snippets/all",
-      (data) => ({ ...data, snippets: newSnippets }),
+      async (data) => {
+        return { ...data, snippets: newSnippets };
+      },
       false
     );
+
     await axios.delete("/api/snippets/remove", {
       data: {
         snippetId: id,
@@ -121,10 +124,13 @@ export default function IndexPage(props) {
   };
 
   useEffect(() => {
-    if (props.session) return;
+    if (props.session) {
+      setActiveSnippet(data.snippets[0]);
+      return;
+    }
 
     Router.replace("/", "/login", { shallow: true });
-  }, [props.session]);
+  }, [props.session, data]);
 
   if (props.session) {
     return (

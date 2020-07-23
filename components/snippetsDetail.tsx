@@ -48,31 +48,43 @@ const SnippetsDetail = ({
           {activeSnippet ? activeSnippet.title : ""}
         </h1>
         <div className="flex items-center">
-          <FaCopy color="grey" />
-          <FaEdit color="grey" className="ml-4" />
-          <FaTrash color="grey" className="ml-4" />
+          <FaCopy color="grey" className="cursor-pointer hover:opacity-75" />
+          <FaEdit
+            color="grey"
+            className="ml-4 cursor-pointer hover:opacity-75"
+            onClick={handleDoubleClick}
+          />
+          <FaTrash
+            onClick={() => removeSnippet(activeSnippet.id)}
+            color="grey"
+            className="ml-4 cursor-pointer hover:opacity-75"
+          />
         </div>
       </div>
 
       <div className="w-full h-2 bg-white border-t-2 border-opacity-50 my-4 border-brandGrey border-dashed" />
 
-      {isEditing ? (
-        <textarea
-          autoFocus
-          onBlur={onFinishedEditing}
-          value={editedText}
-          onChange={(e) => setEditedText(e.target.value)}
-          className="w-full"
-        />
+      {activeSnippet ? (
+        isEditing ? (
+          <textarea
+            autoFocus
+            onBlur={onFinishedEditing}
+            value={editedText}
+            onChange={(e) => setEditedText(e.target.value)}
+            className="w-full"
+          />
+        ) : (
+          <CopyToClipboard
+            text={activeSnippet?.body}
+            onCopy={() => setCopied(true)}
+          >
+            <p className="text-brandGrey" onDoubleClick={handleDoubleClick}>
+              {editedText}
+            </p>
+          </CopyToClipboard>
+        )
       ) : (
-        <CopyToClipboard
-          text={activeSnippet?.body}
-          onCopy={() => setCopied(true)}
-        >
-          <p className="text-brandGrey" onDoubleClick={handleDoubleClick}>
-            {editedText}
-          </p>
-        </CopyToClipboard>
+        <p>No snippets yet add one</p>
       )}
       <span className="text-brandRed">{copied ? "Text copied" : ""}</span>
 

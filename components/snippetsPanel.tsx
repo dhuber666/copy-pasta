@@ -38,16 +38,20 @@ const SnippetsPanel = ({
         />
         <FaSearch className="hover:opacity-75 cursor-pointer text-brandRed" />
       </div>
-      {snippets?.map((snippet) => (
-        <SnippetPanelItem
-          key={snippet.id}
-          editSnippet={editSnippet}
-          snippet={snippet}
-          removeSnippet={removeSnippet}
-          setActiveSnippet={setActiveSnippet}
-          activeSnippet={activeSnippet}
-        />
-      ))}
+      {activeSnippet ? (
+        snippets?.map((snippet) => (
+          <SnippetPanelItem
+            key={snippet.id}
+            editSnippet={editSnippet}
+            snippet={snippet}
+            removeSnippet={removeSnippet}
+            setActiveSnippet={setActiveSnippet}
+            activeSnippet={activeSnippet}
+          />
+        ))
+      ) : (
+        <h3>No snippets yet - add one</h3>
+      )}
     </div>
   );
 };
