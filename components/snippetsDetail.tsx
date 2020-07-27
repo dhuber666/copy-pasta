@@ -62,7 +62,7 @@ const SnippetsDetail = ({
         </div>
       </div>
 
-      <div className="w-full h-2 bg-white border-t-2 border-opacity-50 my-4 border-brandGrey border-dashed" />
+      <div className="w-full bg-white border-t-2 border-opacity-50 my-4 border-brandGrey border-dashed" />
 
       {activeSnippet ? (
         isEditing ? (
@@ -71,7 +71,7 @@ const SnippetsDetail = ({
             onBlur={onFinishedEditing}
             value={editedText}
             onChange={(e) => setEditedText(e.target.value)}
-            className="w-full"
+            className="w-full h-64 p-2"
           />
         ) : (
           <CopyToClipboard

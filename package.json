@@ -1,6 +1,9 @@
 {
-  "name": "with-tailwindcss",
-  "version": "1.0.0",
+  "name": "copy-pasta",
+  "version": "0.1.0",
+  "license": "ISC",
+  "author": "Dominik Huber <dhuber666@gmail.com>",
+  "description": "Copy and Paste your created Snippets",
   "scripts": {
     "dev": "next",
     "build": "next build",

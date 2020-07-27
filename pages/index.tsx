@@ -46,6 +46,7 @@ export default function IndexPage(props) {
   const initialData = props.data;
 
   const { data } = useSWR(snippetsUrl, fetcher, { initialData });
+  console.log(data);
 
   const [activeSnippet, setActiveSnippet] = useState(
     data && data.snippets && data.snippets.length > 0 ? data.snippets[0] : null
@@ -227,7 +228,17 @@ export async function getServerSideProps(ctx) {
     }).then((r) => r.json());
 
   const session = await getSession(ctx);
-  const data = await fetcherServer(`${process.env.SITE}${snippetsUrl}`);
+  let data = [];
+  try {
+    data = await fetcherServer(`${process.env.SITE}${snippetsUrl}`);
+  } catch (e) {
+    return {
+      props: {
+        session,
+        data: { snippets: [] },
+      },
+    };
+  }
 
   return {
     props: {

@@ -29,9 +29,8 @@ const Login = (props) => {
             CopyPasta
           </h1>
           <p className="font-serif text-white mt-12 text-lg">
-            Copypaste.com helps you to easily copy multiple texts at a time it
-            makes your workflow easier. Edit this text box , it contains the
-            main feature of this site and how it makes the users work easier
+            CopyPasta helps you to easily copy multiple texts at a time and it
+            makes your workflow easier. Start now by logging in.
           </p>
         </div>
       </div>
@@ -46,12 +45,7 @@ const Login = (props) => {
         </h2>
 
         <p className="pt-16 text-brandGrey font-serif text-base">
-          Welcome text goes here. Let start by logging in . add some more text
-          here. if you don't have a account{" "}
-          <Link href="/signup">
-            <a className="underline text-brandRed hover:font-bold">Signup</a>
-          </Link>{" "}
-          here.
+          Glad to have you. Let start by logging in..
         </p>
 
         <form className="mt-12" onSubmit={handleSubmit}>

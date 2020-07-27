@@ -13,7 +13,7 @@ const Nav = (props: Props) => {
     <nav className="flex justify-between px-8 items-center bg-white h-20 sticky">
       <div className="flex items-center h-full">
         <img src="icons/Logo.svg" alt="copy-pasta logo" className="h-20" />
-        <h3 className="ml-8">CopyPaste</h3>
+        <h3 className="ml-8">CopyPasta</h3>
       </div>
       <div
         className="flex items-center cursor-pointer text-brandRed"
